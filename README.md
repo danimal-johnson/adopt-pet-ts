@@ -18,3 +18,12 @@ Course Resources:
 
 `npx tailwindcss init` = create a new tailwind installation
 Add `mode: "jit"` to `tailwind.config.js` for just-in-time compliation.
+Add configuration file `.postcssrc` to the root directory.
+
+If you ever need to nuke Tailwind and start over:
+`rm -rf .parcel-cache dist node_modules` then `npm i`
+
+### Using Tailwind
+
+Tailwind is not intended to be a design system (like Bootstrap). It's intended
+to help you set up your applications.
