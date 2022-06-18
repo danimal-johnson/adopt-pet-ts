@@ -64,4 +64,25 @@ import { lazy } from react;
 const Modal = lazy(() => import("./Modal"));
 ```
 
- 
+ ## Server-side rendering (code splitting)
+
+ Copy `App.js` to `ClientApp.js`.
+ BrowserRouter can only happen on the client side, so move it there.
+ Switch from using `render()` to `hydrate()` in `ClientApp`
+ Change the index.html to use `ClientApp.js` instead of `App.js`
+ Add `"targets"` block to `package.json`
+ Add `server/index.js` to host Express server.
+
+Site will now work even without JavaScript enabled (not that it would need to).
+More importantly, once content is displayed, it is immediately usable.
+
+## Streaming
+Same as lazy loading?
+`index.js`: `renderToString` --> `renderToNodeStream`
+Note: that's actually depricated. What should we use instead?
+1. Split the HTML into parts: `html.split("not rendered');`
+2. `res.write(parts[0])` immediately: head and CSS
+3. define `reactMarkup` (the router and app body)
+4. `const stream = renderToNodeStream(reactMarkup)`
+5. `stream.pipe(res, { end: false })` Let it know there is more coming.
+6. `stream.on("end", () => res.end(parts[1]))` Close the connection. Optional.
